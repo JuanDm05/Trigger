@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Trigger.MainPage">
+
+    <StackLayout>
+        <Entry  Placeholder="enter name">
+            <Entry.Triggers>
+                <Trigger TargetType="Entry"
+                         Property="IsFocused" Value="True">
+                    <Setter Property="BackgroundColor" Value="Yellow" />
+                    <!-- You can add more Setter elements as needed -->
+                </Trigger>
+            </Entry.Triggers>
+        </Entry>
+        <Entry x:Name="entry"
+               Text=""
+               Placeholder="required field" />
+        <Button x:Name="button" Text="Save"
+                FontSize="Large"
+                HorizontalOptions="Center">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding Source={x:Reference entry},
+                                           Path=Text.Length}"
+                             Value="0">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <!-- You can add multiple Setter elements here if needed -->
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+        <CheckBox x:Name="checkBox" />
+        <Label Text="JUAN ADOLFO DOMINGUEZ MUÑOZ.">
+            <Label.Triggers>
+                <DataTrigger TargetType="Label"
+                     Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
+                     Value="true">
+                    <Setter Property="FontAttributes"
+                    Value="Italic, Bold" />
+                    <Setter Property="FontSize"
+                    Value="Large" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+        <!-- Multi Trigger -->
+        <Entry  x:Name     ="UserEntry" 
+               Placeholder="User name"
+               WidthRequest ="40"/>
+
+        <Entry  x:Name     ="FullnameEntry" 
+               Placeholder="Your fullname"
+               WidthRequest ="40"/>
+
+        <Button Text            ="Save"
+                BackgroundColor ="#C39BD3">
+            <Button.Triggers>
+                <MultiTrigger  TargetType ="Button">
+                    <MultiTrigger.Conditions>
+                        <BindingCondition Binding   ="{Binding Source={x:Reference UserEntry}, Path=Text.Length}" 
+                                          Value     ="6" />
+                        <BindingCondition Binding   ="{Binding Source={x:Reference FullnameEntry}, Path=IsFocused}" 
+                                          Value     ="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Text"             Value="Trigger activated" />
+                    <Setter Property="BackgroundColor"  Value="#5DADE2" />
+                </MultiTrigger>
+            </Button.Triggers>
+        </Button>
+
+    </StackLayout>
+    
+</ContentPage>
